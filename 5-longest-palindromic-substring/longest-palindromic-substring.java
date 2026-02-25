@@ -14,8 +14,8 @@ class Solution {
             if(p.length() > ls.length()){
                 ls = p;
             }
-            l = i - 1;
-            r = i;
+            l = i;
+            r = i + 1;
             while(l >= 0 && r < s.length() && s.charAt(l) == s.charAt(r)){
                 l--;
                 r++;
