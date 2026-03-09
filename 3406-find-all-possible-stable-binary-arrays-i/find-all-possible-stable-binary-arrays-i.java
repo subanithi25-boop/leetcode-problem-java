@@ -1,19 +1,43 @@
 class Solution {
+    int MOD = 1000000007;
+    Integer[][][][] memo;
+
     public int numberOfStableArrays(int zero, int one, int limit) {
-        int MOD = 1_000_000_007;
-        long[][][] dp = new long[zero+1][one+1][2];
-        for(int i=1;i<=Math.min(zero,limit);i++) dp[i][0][0]=1;
-        for(int j=1;j<=Math.min(one,limit);j++) dp[0][j][1]=1;
+        memo = new Integer[zero + 1][one + 1][2][limit + 1];
+        return dfs(zero, one, limit, -1, 0);
+    }
 
-        for(int i=1;i<=zero;i++){
-            for(int j=1;j<=one;j++){
-                long over0 = (i-limit>=1)? dp[i-limit-1][j][1]:0;
-                long over1 = (j-limit>=1)? dp[i][j-limit-1][0]:0;
+    private int dfs(int z, int o, int limit, int last, int count) {
+        if (z == 0 && o == 0) return 1;
 
-                dp[i][j][0]=(dp[i-1][j][0]+dp[i-1][j][1]-over0+MOD)%MOD;
-                dp[i][j][1]=(dp[i][j-1][0]+dp[i][j-1][1]-over1+MOD)%MOD;
+        if (last != -1 && memo[z][o][last][count] != null)
+            return memo[z][o][last][count];
+
+        long ways = 0;
+
+        if (z > 0) {
+            if (last == 0) {
+                if (count < limit)
+                    ways += dfs(z - 1, o, limit, 0, count + 1);
+            } else {
+                ways += dfs(z - 1, o, limit, 0, 1);
             }
         }
-        return (int)((dp[zero][one][0]+dp[zero][one][1])%MOD);
+
+        if (o > 0) {
+            if (last == 1) {
+                if (count < limit)
+                    ways += dfs(z, o - 1, limit, 1, count + 1);
+            } else {
+                ways += dfs(z, o - 1, limit, 1, 1);
+            }
+        }
+
+        ways %= MOD;
+
+        if (last != -1)
+            memo[z][o][last][count] = (int) ways;
+
+        return (int) ways;
     }
 }
