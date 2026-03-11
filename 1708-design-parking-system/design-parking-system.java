@@ -25,6 +25,19 @@ class ParkingSystem {
         return false;
     }
 }
+public class Main{
+    public static void main(String args[]){
+        // Scanner sc = new Scanner(System.in);
+        // int big = sc.nextInt();
+        // int medium = sc.nextInt();
+        // int small = sc.nextInt();
+        ParkingSystem ps = new ParkingSystem(1, 1, 0);
+        System.out.println(ps.addCar(1));
+        System.out.println(ps.addCar(2));
+        System.out.println(ps.addCar(3));
+        System.out.println(ps.addCar(1));
+    }
+}
 
 /**
  * Your ParkingSystem object will be instantiated and called as such:
