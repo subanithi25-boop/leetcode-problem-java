@@ -1,6 +1,6 @@
 class Solution {
     public String intToRoman(int num) {
-        Map<Integer, String> map = new HashMap<>();
+        Map<Integer, String> map = new LinkedHashMap<>();
         map.put(1000, "M");
         map.put(900, "CM");
         map.put(500, "D");
@@ -14,15 +14,13 @@ class Solution {
         map.put(5, "V");
         map.put(4, "IV");
         map.put(1, "I");
-        int[] val = {1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1};
         String r = "";
-        for(int v : val){
-            while(num >= v){
-                r += map.get(v);
-                num = num - v;
+        for(int key : map.keySet()){
+            while(num >= key){
+                r += map.get(key);
+                num = num - key;
             }
         }
-
         return r;
     }
 }
