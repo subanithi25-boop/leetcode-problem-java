@@ -17,18 +17,8 @@ class Solution {
             fast = fast.next.next;
         }
         ListNode fh = head;
-        ListNode sh = rev(slow);
-        while(sh != null){
-            if(fh.val != sh.val){
-                return false;
-            }
-            fh = fh.next;
-            sh = sh.next;
-        }
-        return true;
-    }
-    public ListNode rev(ListNode head){
-        ListNode temp = head;
+        ListNode sh = slow;
+        ListNode temp = sh;
         ListNode prev = null;
         ListNode next = null;
         while(temp != null){
@@ -37,6 +27,14 @@ class Solution {
             prev = temp;
             temp = next;
         }
-        return prev;
+        sh = prev;
+        while(sh != null){
+            if(fh.val != sh.val){
+                return false;
+            }
+            fh = fh.next;
+            sh = sh.next;
+        }
+        return true;
     }
 }
