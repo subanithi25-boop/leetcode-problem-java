@@ -18,9 +18,9 @@ class Solution {
             else{
                 q.offer(q.poll());
                 rej++;
-            }
-            if(rej == q.size()){
+                if(rej == q.size()){
                 return q.size();
+               }
             }
         }
         return q.size();
