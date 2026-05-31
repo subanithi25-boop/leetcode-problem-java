@@ -1,31 +1,38 @@
 class Solution {
     public String reformat(String s) {
-        if(s.length() == 1){
-            return s;
+
+        List<Character> letters = new ArrayList<>();
+        List<Character> digits = new ArrayList<>();
+
+        for (char ch : s.toCharArray()) {
+
+            if (Character.isDigit(ch))
+                digits.add(ch);
+            else
+                letters.add(ch);
         }
-        StringBuilder sb = new StringBuilder();
-        Stack<Character> letter = new Stack<>();
-        Stack<Character> digit = new Stack<>();
-        for(char ch : s.toCharArray()){
-            if(Character.isLetter(ch)){
-                letter.push(ch);
-            }
-            else{
-                digit.push(ch);
-            }
-        }
-        if(Math.abs(digit.size() - letter.size()) > 1){
+
+        if (Math.abs(letters.size() - digits.size()) > 1)
             return "";
+
+        StringBuilder ans = new StringBuilder();
+
+        boolean letterFirst = letters.size() >= digits.size();
+
+        int i = 0, j = 0;
+
+        while (i < letters.size() || j < digits.size()) {
+
+            if (letterFirst && i < letters.size())
+                ans.append(letters.get(i++));
+
+            if (j < digits.size())
+                ans.append(digits.get(j++));
+
+            if (!letterFirst && i < letters.size())
+                ans.append(letters.get(i++));
         }
-        while(!letter.isEmpty() && !digit.isEmpty()){
-            sb.append(letter.pop()).append(digit.pop());
-        }
-        if(!letter.isEmpty()){
-            sb.append(letter.pop());
-        }
-        if(!digit.isEmpty()){
-            sb.insert(0, digit.pop());
-        }
-        return sb.toString();
+
+        return ans.toString();
     }
 }
